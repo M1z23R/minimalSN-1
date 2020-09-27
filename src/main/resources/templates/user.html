@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+   <head>
+      <meta charset="ISO-8859-1">
+      <title>Registration and Login App</title>
+      <link rel="stylesheet"
+         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+         crossorigin="anonymous">
+   </head>
+   <body>
+      <!-- create navigation bar ( header) -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+         <div class="container">
+            <div class="navbar-header">
+               <button type="button" class="navbar-toggle collapsed"
+                  data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                  aria-controls="navbar">
+               <span class="sr-only">Toggle navigation</span> <span
+                  class="icon-bar"></span> <span class="icon-bar"></span> <span
+                  class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand" href="#" th:href="@{/}">LiteSocialNetwork</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+               <ul class="nav navbar-nav">
+                  <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+      <div class="container">
+         <div style="margin-top: 50px;" class="col-md-4">
+			<img style="margin-top: 20px; max-width: 200px;" th:src="${user.photo_url}">
+			<h1>
+			<label th:text="${user.first_name}"></label>
+			<label th:text="${user.last_Name}"></label>
+			</h1>
+			Email: <label th:text="${user.email}"></label><br>
+			Gender: <label th:text="${user.gender}"></label><br>
+			Date of birth: <label th:text="${user.date_of_birth}"></label><br>
+			About me: <label th:text="${user.about_me}"></label><br>
+         </div>
+         
+         
+         
+         <div style="margin-top: 50px;" class="col-md-6">
+            <table style="border-collapse:separate; border-spacing:0 20px; width: 100%">
+         	      <tbody>
+                  <tr th:each="post : ${listUserPosts}">
+                     <td style="background: lightgray; padding: 10px;">
+                        <label><a th:text="${post.userName}" th:href="@{/users/} + ${post.userId}"/></label><br>
+                        <label th:text="${post.creation_date}"/><br>
+                        <img style="width: 100%;" th:src="${post.photo_url}"/>
+                        <p style="width: 100%; background: white; padding: 5px;"th:text="${post.content}"/>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         </div>
+		 
+   </body>
+</html>
